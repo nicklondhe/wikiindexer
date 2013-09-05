@@ -5,17 +5,12 @@ package edu.buffalo.cse.ir.wikiindexer.parsers.test;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Properties;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 import edu.buffalo.cse.ir.wikiindexer.FileUtil;
 import edu.buffalo.cse.ir.wikiindexer.parsers.Parser;
@@ -53,6 +48,13 @@ public class ParserTest extends PropertiesBasedTest {
 		//invalid filename
 		testClass.parse("abc.xml", list);
 		assertTrue(list.isEmpty());
+		
+		//five documents
+		testClass.parse(FileUtil.getRootFilesFolder(idxProps) + "five_entries.xml", list);
+		assertEquals(5, list.size());
+		/* TODO: Add structural test here */
+		
+		
 	}
 
 }

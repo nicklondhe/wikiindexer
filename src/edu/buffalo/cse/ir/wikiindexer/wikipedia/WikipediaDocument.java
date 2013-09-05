@@ -35,6 +35,9 @@ public class WikipediaDocument {
 	/* Page id, not revision nor parent id */
 	private int id;
 	
+	/* Page title */
+	private String title;
+	
 	/* Look at the Section class below. Every page is a collection of sections */
 	private List<Section> sections;
 	
@@ -50,16 +53,18 @@ public class WikipediaDocument {
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	/**
-	 * Default constructor. Please do not change visibility
+	 * Default constructor.
 	 * @param idFromXml: The parsed id from the xml
 	 * @param timestampFromXml: The parsed timestamp from the xml
 	 * @param authorFromXml: The parsed author from the xml
+	 * @param ttl: The title of the page
 	 * @throws ParseException If the timestamp isn't in the expected format
 	 */
-	protected WikipediaDocument(int idFromXml, String timestampFromXml, String authorFromXml) throws ParseException {
+	public WikipediaDocument(int idFromXml, String timestampFromXml, String authorFromXml, String ttl) throws ParseException {
 		this.id = idFromXml;
 		this.publishDate = (timestampFromXml == null) ? null : sdf.parse(timestampFromXml);
 		this.author = (authorFromXml == null) ? null : authorFromXml;
+		this.title = (ttl == null) ? null : ttl;
 		sections = new ArrayList<WikipediaDocument.Section>();
 		links = new HashSet<String>();
 		categories = new ArrayList<String>();
@@ -172,7 +177,13 @@ public class WikipediaDocument {
 	public Map<String, String> getLangLinks() {
 		return langLinks;
 	}
-
+	
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
 	/*
 	 * Class to mimic a section of a page
 	 */
