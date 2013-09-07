@@ -48,6 +48,16 @@ public class TokenizerFactory {
 	 */
 	public Tokenizer getTokenizer(INDEXFIELD field) {
 		//TODO: Implement this method
+		/*
+		 * For example, for field F1 I want to apply rules R1, R3 and R5
+		 * For F2, the rules are R1, R2, R3, R4 and R5 both in order
+		 * So the pseudo-code will be like:
+		 * if (field == F1)
+		 * 		return new Tokenizer(new R1(), new R3(), new R5())
+		 * else if (field == F2)
+		 * 		return new TOkenizer(new R1(), new R2(), new R3(), new R4(), new R5())
+		 * ... etc
+		 */
 		return null;
 	}
 }

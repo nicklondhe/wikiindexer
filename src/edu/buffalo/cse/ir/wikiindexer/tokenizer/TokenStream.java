@@ -24,6 +24,14 @@ public class TokenStream implements Iterator<String>{
 	}
 	
 	/**
+	 * Overloaded constructor
+	 * @param bldr: THe stringbuilder to seed the stream
+	 */
+	public TokenStream(String string) {
+		//TODO: Implement this method
+	}
+	
+	/**
 	 * Method to append tokens to the stream
 	 * @param tokens: The tokens to be appended
 	 */
@@ -56,7 +64,7 @@ public class TokenStream implements Iterator<String>{
 	/**
 	 * Method to query for the given token within the stream
 	 * @param token: The token to be queried
-	 * @return: THe number of times it occurs within the stream, -1 if not found
+	 * @return: THe number of times it occurs within the stream, 0 if not found
 	 */
 	public int query(String token) {
 		//TODO: Implement this method
@@ -137,7 +145,8 @@ public class TokenStream implements Iterator<String>{
 	 * Method to replace the current token with the given tokens
 	 * The stream should be manipulated accordingly based upon the number of tokens set
 	 * It is expected that remove will be called to delete a token instead of passing
-	 * null or an empty string here
+	 * null or an empty string here.
+	 * The iterator should point to the last set token, i.e, last token in the passed array.
 	 * @param newValue: The array of new values with every new token as a separate element within the array
 	 */
 	public void set(String... newValue) {
