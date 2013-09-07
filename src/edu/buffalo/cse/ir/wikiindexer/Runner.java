@@ -96,7 +96,7 @@ public class Runner {
 		
 		//initialize tokenizers
 		Map<INDEXFIELD, Tokenizer> ifmap = new HashMap<INDEXFIELD, Tokenizer>();
-		TokenizerFactory tfact = TokenizerFactory.getInstance();
+		TokenizerFactory tfact = TokenizerFactory.getInstance(properties);
 		for (INDEXFIELD idxf : INDEXFIELD.values()) {
 			ifmap.put(idxf, tfact.getTokenizer(idxf));
 		}

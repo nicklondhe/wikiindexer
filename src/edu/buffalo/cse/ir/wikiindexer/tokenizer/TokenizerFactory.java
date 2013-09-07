@@ -3,6 +3,8 @@
  */
 package edu.buffalo.cse.ir.wikiindexer.tokenizer;
 
+import java.util.Properties;
+
 import edu.buffalo.cse.ir.wikiindexer.indexer.INDEXFIELD;
 
 /**
@@ -16,6 +18,9 @@ public class TokenizerFactory {
 	//private instance, we just want one factory
 	private static TokenizerFactory factory;
 	
+	//properties file, if you want to read soemthing for the tokenizers
+	private static Properties props;
+	
 	/**
 	 * Private constructor, singleton
 	 */
@@ -27,9 +32,10 @@ public class TokenizerFactory {
 	 * MEthod to get an instance of the factory class
 	 * @return The factory instance
 	 */
-	public static TokenizerFactory getInstance() {
+	public static TokenizerFactory getInstance(Properties idxProps) {
 		if (factory == null) {
 			factory = new TokenizerFactory();
+			props = idxProps;
 		}
 		
 		return factory;
