@@ -34,6 +34,8 @@ public interface TokenizerRule {
 		NUMBERS, //for numbers
 		CAPITALIZATION, //for capitalization
 		ACCENTS, //acccents and diacritics
+		WHITESPACE, //split by whitespace
+		DELIM, //split by any delim *will not be tested*
 		STEMMER, //stemmer
 		STOPWORDS //stop words
 	};
