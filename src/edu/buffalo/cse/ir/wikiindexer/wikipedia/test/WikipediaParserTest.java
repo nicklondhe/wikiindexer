@@ -112,7 +112,7 @@ public class WikipediaParserTest {
 		assertEquals("", WikipediaParser.parseTagFormatting(""));
 		
 		//empty tag test
-		assertEquals("Watch the disappear", WikipediaParser.parseTagFormatting("Watch the <tag/> dissappear"));
+		assertEquals("Watch the disappear", WikipediaParser.parseTagFormatting("Watch the <tag/> disappear"));
 		
 		//tag with content
 		assertEquals("I should not vanish", WikipediaParser.parseTagFormatting("<random> I should not vanish </random>"));
