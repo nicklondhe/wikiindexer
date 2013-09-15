@@ -60,6 +60,10 @@ public class Runner {
 							printUsage();
 							System.exit(4);
 						}	
+					} else {
+						System.err.println("Invalid or no mode specified!");
+						printUsage();
+						System.exit(5);
 					}
 				}
 			} else {

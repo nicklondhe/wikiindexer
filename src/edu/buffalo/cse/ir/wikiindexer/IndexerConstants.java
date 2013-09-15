@@ -22,7 +22,7 @@ public interface IndexerConstants {
 	}
 	
 	/* Total number of properties */
-	public static final int NUM_PROPERTIES = 2;
+	public static final int NUM_PROPERTIES = 3;
 	
 	/* Root directory */
 	@RequiredConstant
@@ -31,5 +31,13 @@ public interface IndexerConstants {
 	/* Dump file name */
 	@RequiredConstant
 	public static final String DUMP_FILENAME = "dump.filename";
+	
+	/* Total number of threads */
+	@RequiredConstant
+	public static final String NUM_TOKENIZER_THREADS = "tknizer.nthreads";
+	
+	/* Fully qualified temporary directory name */
+	@RequiredConstant
+	public static final String TEMP_DIR = "tmp.dir";
 	
 }

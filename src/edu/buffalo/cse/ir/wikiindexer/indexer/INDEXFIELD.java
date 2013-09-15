@@ -12,6 +12,5 @@ public enum INDEXFIELD {
 	TERM, //The main index, includes all terms from the page text
 	AUTHOR, //The author index
 	CATEGORY, //The category index
-	LANGUAGE, //The language index
-	LINK //THe link index
+	LINK //THe link index, also synonym for document dictionary
 }
