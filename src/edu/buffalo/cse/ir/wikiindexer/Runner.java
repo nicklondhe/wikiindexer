@@ -9,18 +9,27 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.CompletionService;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.junit.runner.Computer;
 import org.junit.runner.JUnitCore;
 
 import edu.buffalo.cse.ir.wikiindexer.IndexerConstants.RequiredConstant;
 import edu.buffalo.cse.ir.wikiindexer.indexer.INDEXFIELD;
+import edu.buffalo.cse.ir.wikiindexer.indexer.IndexerException;
+import edu.buffalo.cse.ir.wikiindexer.indexer.SharedDictionary;
 import edu.buffalo.cse.ir.wikiindexer.parsers.Parser;
 import edu.buffalo.cse.ir.wikiindexer.test.AllTests;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.Tokenizer;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerFactory;
 import edu.buffalo.cse.ir.wikiindexer.wikipedia.DocumentTransformer;
+import edu.buffalo.cse.ir.wikiindexer.wikipedia.IndexableDocument;
 import edu.buffalo.cse.ir.wikiindexer.wikipedia.WikipediaDocument;
 
 /**
@@ -98,18 +107,104 @@ public class Runner {
 		ConcurrentLinkedQueue<WikipediaDocument> queue = new ConcurrentLinkedQueue<WikipediaDocument>();
 		parser.parse(FileUtil.getDumpFileName(properties), queue);
 		
-		//initialize tokenizers
-		Map<INDEXFIELD, Tokenizer> ifmap = new HashMap<INDEXFIELD, Tokenizer>();
-		TokenizerFactory tfact = TokenizerFactory.getInstance(properties);
-		for (INDEXFIELD idxf : INDEXFIELD.values()) {
-			ifmap.put(idxf, tfact.getTokenizer(idxf));
+		synchronized (queue) {
+			while (queue.size() < 10) {
+				//do nothing till we have at least 10 elements
+				//we assume that a lead of 10 will be sufficient
+			}
 		}
 		
+		tokenizeAndIndex(properties, queue);
+	}
+
+	private static void tokenizeAndIndex(Properties properties,
+			ConcurrentLinkedQueue<WikipediaDocument> queue) {
+		/*
+		 * Pseudo-code:
+		 * 		1. Create a thread executor
+		 * 		2. For each runner, initialize the tokenizer as needed
+		 * 		3. Keep calling and putting as required
+		 */
+		ExecutorService threadPool = Executors.newFixedThreadPool(Integer.valueOf(properties.get(IndexerConstants.NUM_TOKENIZER_THREADS).toString()));
+		CompletionService<IndexableDocument> pool = new ExecutorCompletionService<IndexableDocument>(threadPool);
 		
+		WikipediaDocument doc;
+		Map<INDEXFIELD, Tokenizer> tknizerMap;
+		int numDocs = 0;
+		while ((doc = queue.poll()) != null) {
+			tknizerMap = initMap(properties);
+			pool.submit(new DocumentTransformer(tknizerMap, doc));
+			numDocs++;
+		}
 		
+		IndexableDocument idoc;
+		SharedDictionary docDict = new SharedDictionary(properties, INDEXFIELD.LINK);
+		int currDocId;
+		ThreadedIndexerRunner termRunner = new ThreadedIndexerRunner(properties);
+		SingleIndexerRunner authIdxer = new SingleIndexerRunner(properties, INDEXFIELD.AUTHOR, INDEXFIELD.LINK, docDict, false);
+		SingleIndexerRunner catIdxer = new SingleIndexerRunner(properties, INDEXFIELD.CATEGORY, INDEXFIELD.LINK, docDict, false);
+		SingleIndexerRunner linkIdxer = new SingleIndexerRunner(properties, INDEXFIELD.LINK, INDEXFIELD.LINK, docDict, true);
+		Map<String, Integer> tokenmap;
 		
-		//TODO: More code to be added here!
+		for (int i = 0; i < numDocs; i++) {
+			try {
+				idoc = pool.take().get();
+				currDocId = docDict.lookup(idoc.getDocumentIdentifier());
+				
+				try {
+					for (INDEXFIELD fld : INDEXFIELD.values()) {
+						tokenmap = idoc.getStream(fld).getTokenMap();
+						switch (fld) {
+						case TERM:
+							termRunner.addToIndex(tokenmap, currDocId);
+							break;
+						case AUTHOR:
+							authIdxer.processTokenMap(currDocId, tokenmap);
+							break;
+						case CATEGORY:
+							catIdxer.processTokenMap(currDocId, tokenmap);
+							break;
+						case LINK:
+							linkIdxer.processTokenMap(currDocId, tokenmap);
+							break;
+						}
+					}
+				} catch (IndexerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
 		
+		try {
+			termRunner.cleanup();
+			authIdxer.cleanup();
+			catIdxer.cleanup();
+			linkIdxer.cleanup();
+		} catch (IndexerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		threadPool.shutdown();
+		
+	}
+
+	private static Map<INDEXFIELD, Tokenizer> initMap(Properties props) {
+		HashMap<INDEXFIELD, Tokenizer> map = new HashMap<INDEXFIELD, Tokenizer>(INDEXFIELD.values().length);
+		TokenizerFactory fact = TokenizerFactory.getInstance(props);
+		for (INDEXFIELD fld : INDEXFIELD.values()) {
+			map.put(fld, fact.getTokenizer(fld));
+		}
+		
+		return map;
 	}
 
 	/**
