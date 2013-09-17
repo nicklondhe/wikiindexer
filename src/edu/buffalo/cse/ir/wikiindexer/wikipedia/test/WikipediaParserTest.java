@@ -157,13 +157,13 @@ public class WikipediaParserTest {
 		assertEquals(new Object[]{"",""}, WikipediaParser.parseLinks(null));
 		
 		//simple links
-		assertEquals(new Object[]{"Lone Star State","Texas"}, WikipediaParser.parseLinks("[[Texas|LOne Star State]]"));
+		assertEquals(new Object[]{"Lone Star State","Texas"}, WikipediaParser.parseLinks("[[Texas|Lone Star State]]"));
 		
 		//auto capitalization
 		assertEquals(new Object[]{"London has public transport", "Public_transport"}, WikipediaParser.parseLinks("London has [[public transport]]"));
 		
 		//drop after _ and , automatically
-		assertEquals(new Object[]{"kingdom", "kingdom_(biology)"}, WikipediaParser.parseLinks("[[kingdom (biology)|]]"));
+		assertEquals(new Object[]{"kingdom", "Kingdom_(biology)"}, WikipediaParser.parseLinks("[[kingdom (biology)|]]"));
 		assertEquals(new Object[]{"Seattle", "Seattle,_Washington"}, WikipediaParser.parseLinks("[[Seattle, Washington|]]"));
 		
 		//outside namespace, not interested
@@ -180,7 +180,7 @@ public class WikipediaParserTest {
 		//blending etc.
 		assertEquals(new Object[]{"New York also has public transportation", "Public_transport"}, WikipediaParser.parseLinks("New York also has [[public transport|public transportation]]"));
 		assertEquals(new Object[]{"San Francisco also has public transportation", "Public_transport"}, WikipediaParser.parseLinks("San Francisco also has [[public transport]]ation"));
-		assertEquals(new Object[]{"A micro-second", "micro-"}, WikipediaParser.parseLinks("A [[micro-]]<nowiki />second."));
+		assertEquals(new Object[]{"A micro-second", "Micro-"}, WikipediaParser.parseLinks("A [[micro-]]<nowiki />second."));
 		assertEquals(new Object[]{"Wikipedia:Manual of Style#Links",""}, WikipediaParser.parseLinks("[[Wikipedia:Manual of Style#Links|]]"));
 		
 		//categories: the method should parse 'em but not index
