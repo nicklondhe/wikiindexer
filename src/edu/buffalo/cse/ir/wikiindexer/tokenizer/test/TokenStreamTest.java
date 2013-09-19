@@ -176,7 +176,7 @@ public class TokenStreamTest {
 		
 		//same token repeated
 		stream = new TokenStream("hello");
-		stream.append("hello","hello","hello","helllo");
+		stream.append("hello","hello","hello","hello");
 		assertEquals(0, stream.query("test"));
 		assertEquals(5, stream.query("hello"));
 		stream = null;
@@ -283,10 +283,10 @@ public class TokenStreamTest {
 		stream.seekEnd();
 		stream.previous();
 		stream.mergeWithPrevious();
-		assertFalse(stream.hasNext());
+		assertTrue(stream.hasNext());
 		stream = null;
 		
-		//with merge with previous
+		//with merge with next
 		stream = new TokenStream("this");
 		stream.append("is","a","test","stream");
 		stream.mergeWithNext();
@@ -295,6 +295,7 @@ public class TokenStreamTest {
 		stream.previous();
 		stream.previous();
 		stream.mergeWithNext();
+		stream.next();
 		assertFalse(stream.hasNext());
 		stream = null;
 	}
@@ -467,10 +468,10 @@ public class TokenStreamTest {
 		stream.seekEnd();
 		assertEquals("stream", stream.previous());
 		stream.next();
-		assertEquals("stream", stream.next());
-		assertEquals("test", stream.next());
-		assertEquals("a", stream.next());
-		stream.seekEnd();
+		assertEquals("stream", stream.previous());
+		assertEquals("test", stream.previous());
+		assertEquals("a", stream.previous());
+		stream.reset();
 		assertEquals("this", stream.next());
 		stream = null;
 		
@@ -482,7 +483,7 @@ public class TokenStreamTest {
 		assertEquals("is", stream.previous());
 		stream.next();
 		stream.remove();
-		assertEquals("a", stream.previous());
+		assertEquals("is", stream.previous());
 		stream = null;
 		
 		//with merge with previous
@@ -646,11 +647,11 @@ public class TokenStreamTest {
 		assertEquals("a test stream", stream.next());
 		stream.previous();
 		stream.previous();
-		assertTrue(stream.mergeWithPrevious());
+		assertTrue(stream.mergeWithNext());
 		assertEquals("is a test stream", stream.next());
 		stream.previous();
 		stream.previous();
-		assertTrue(stream.mergeWithPrevious());
+		assertTrue(stream.mergeWithNext());
 		assertEquals("this is a test stream", stream.next());
 		stream.previous();
 		assertFalse(stream.mergeWithNext());
@@ -793,7 +794,7 @@ public class TokenStreamTest {
 		stream = new TokenStream("this");
 		stream.append("is","a","test","stream");
 		stream.seekEnd();
-		assertEquals("this", stream.previous());
+		assertEquals("stream", stream.previous());
 		stream = null;
 	}
 

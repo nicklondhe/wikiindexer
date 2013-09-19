@@ -170,7 +170,7 @@ public class WikipediaParserTest {
 		assertEquals(new Object[]{"Village pump", ""}, WikipediaParser.parseLinks("[[Wikipedia:Village pump|]]"));
 		assertEquals(new Object[]{"Manual of Style", ""}, WikipediaParser.parseLinks("[[Wikipedia:Manual of Style (headings)|]]"));
 		assertEquals(new Object[]{"Wiktionary:Hello",""}, WikipediaParser.parseLinks("[[Wiktionary:Hello]]"));
-		assertEquals(new Object[]{"Wiktionary:fr:bonjour",""}, WikipediaParser.parseLinks("[[Wiktionary:fr:bonjour|]]"));
+		assertEquals(new Object[]{"fr:bonjour",""}, WikipediaParser.parseLinks("[[Wiktionary:fr:bonjour|]]"));
 		assertEquals(new Object[]{"Sound",""}, WikipediaParser.parseLinks("[[media:Classical guitar scale.ogg|Sound]]"));
 		assertEquals(new Object[]{"",""}, WikipediaParser.parseLinks("[[File:wiki.png]]"));
 		assertEquals(new Object[]{"Wikipedia encyclopedia",""}, WikipediaParser.parseLinks("[[File:wiki.png|right|Wikipedia encyclopedia]]"));
@@ -180,7 +180,7 @@ public class WikipediaParserTest {
 		//blending etc.
 		assertEquals(new Object[]{"New York also has public transportation", "Public_transport"}, WikipediaParser.parseLinks("New York also has [[public transport|public transportation]]"));
 		assertEquals(new Object[]{"San Francisco also has public transportation", "Public_transport"}, WikipediaParser.parseLinks("San Francisco also has [[public transport]]ation"));
-		assertEquals(new Object[]{"A micro-second", "Micro-"}, WikipediaParser.parseLinks("A [[micro-]]<nowiki />second."));
+		assertEquals(new Object[]{"A micro-second", "Micro-"}, WikipediaParser.parseLinks("A [[micro-]]<nowiki />second"));
 		assertEquals(new Object[]{"Wikipedia:Manual of Style#Links",""}, WikipediaParser.parseLinks("[[Wikipedia:Manual of Style#Links|]]"));
 		
 		//categories: the method should parse 'em but not index
