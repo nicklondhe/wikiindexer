@@ -40,4 +40,11 @@ public interface IndexerConstants {
 	@RequiredConstant
 	public static final String TEMP_DIR = "tmp.dir";
 	
+	/* tokenizer rule class names */
+	public static final String PUNCTUATIONRULE = "punct.rule";
+	public static final String APOSTROPHERULE = "apos.rule";
+	public static final String HYPHENRULE = "hyph.rule";
+	public static final String SPECIALCHARRULE = "spch.rule";
+	
+	
 }
