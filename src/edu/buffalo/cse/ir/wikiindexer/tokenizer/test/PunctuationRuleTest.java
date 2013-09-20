@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import edu.buffalo.cse.ir.wikiindexer.IndexerConstants;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.rules.TokenizerRule;
 
@@ -23,7 +24,7 @@ public class PunctuationRuleTest extends TokenizerRuleTest {
 	private TokenizerRule rule;
 	
 	public PunctuationRuleTest(Properties props) {
-		super(props);
+		super(props, IndexerConstants.PUNCTUATIONRULE);
 	}
 	
 

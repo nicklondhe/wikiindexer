@@ -26,9 +26,9 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.rules.TokenizerRule;
 public class TokenizerRuleTest extends PropertiesBasedTest {
 	protected TokenizerRule rule;
 	
-	public TokenizerRuleTest(Properties props) {
+	public TokenizerRuleTest(Properties props, String constantName) {
 		super(props);
-		String className = idxProps.getProperty(IndexerConstants.PUNCTUATIONRULE);
+		String className = idxProps.getProperty(constantName);
 		if (className != null) {
 			try {
 				Class cls = Class.forName(className);
