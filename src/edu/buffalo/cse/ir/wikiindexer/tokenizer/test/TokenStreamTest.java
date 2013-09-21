@@ -527,10 +527,10 @@ public class TokenStreamTest {
 		stream = new TokenStream("this");
 		stream.append("is","a","test","stream");
 		
-		int currcnt = 4;
+		int currcnt = 5;
 		while (stream.hasNext()) {
-			stream.remove();
 			assertEquals(currcnt--, stream.getAllTokens().size());
+			stream.remove();
 		}
 		stream = null;
 		

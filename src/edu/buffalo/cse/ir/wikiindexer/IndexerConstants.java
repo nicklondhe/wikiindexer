@@ -46,5 +46,8 @@ public interface IndexerConstants {
 	public static final String HYPHENRULE = "hyph.rule";
 	public static final String SPECIALCHARRULE = "spch.rule";
 	public static final String WHITESPACERULE = "space.rule";
+	public static final String DATERULE = "date.rule";
+	public static final String STOPWORDSRULE = "stwrds.rule";
+	public static final String ACCENTRULE = "accnt.rule";
 	
 }
