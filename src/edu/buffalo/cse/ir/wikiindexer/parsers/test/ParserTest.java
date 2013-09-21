@@ -102,7 +102,7 @@ public class ParserTest extends PropertiesBasedTest {
 	private void validateSections(WikipediaDocument doc, int cnt) {
 		//we validate count and the kth section title for the kth document
 		int ns = numsections[cnt];
-		int idx = (cnt >= ns - 1) ? cnt : ns - 1;
+		int idx = (cnt <= ns - 1) ? cnt : ns - 1;
 		assertEquals(ns, doc.getSections().size());
 		assertEquals(sectitles[cnt], doc.getSections().get(idx).getTitle());
 	}
@@ -110,7 +110,7 @@ public class ParserTest extends PropertiesBasedTest {
 	private void validateCategories(WikipediaDocument doc, int cnt) {
 		//we validate count and the kth category for the kth document
 		int nc = numcategories[cnt];
-		int idx = (cnt >= nc - 1) ? cnt : nc - 1;
+		int idx = (cnt <= nc - 1) ? cnt : nc - 1;
 		assertEquals(nc, doc.getCategories().size());
 		assertEquals(cattitles[cnt], doc.getCategories().get(idx));
 	}

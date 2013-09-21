@@ -45,6 +45,6 @@ public interface IndexerConstants {
 	public static final String APOSTROPHERULE = "apos.rule";
 	public static final String HYPHENRULE = "hyph.rule";
 	public static final String SPECIALCHARRULE = "spch.rule";
-	
+	public static final String WHITESPACERULE = "space.rule";
 	
 }
