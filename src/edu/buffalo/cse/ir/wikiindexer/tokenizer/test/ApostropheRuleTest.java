@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import static org.junit.Assert.*;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -24,6 +25,7 @@ public class ApostropheRuleTest extends TokenizerRuleTest {
 		super(props, IndexerConstants.APOSTROPHERULE);
 	}
 	
+	@Test
 	public void testRule() {
 		if (rule == null) {
 			 fail("Rule not implemented");

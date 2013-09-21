@@ -36,16 +36,16 @@ public class PunctuationRuleTest extends TokenizerRuleTest {
 		} else {
 			try {
 				//single mark at the end, one token
-				assertEquals("Remove at the end", runtest("Remove at the end."));
-				assertEquals("Remove at the end", runtest("Remove at the end?"));
-				assertEquals("Remove at the end", runtest("Remove at the end!"));
+				assertArrayEquals(new Object[] {"Remove at the end"}, runtest("Remove at the end."));
+				assertArrayEquals(new Object[] {"Remove at the end"}, runtest("Remove at the end?"));
+				assertArrayEquals(new Object[] {"Remove at the end"}, runtest("Remove at the end!"));
 				
 				//one token with multiple marks
 				assertArrayEquals(new Object[] {"Remove from sentence 1 Remove from sentence 2"},
 						runtest("Remove from sentence 1. Remove from sentence 2."));
 				assertArrayEquals(new Object[] {"Remove from sentence 1 Remove from sentence 2"},
 						runtest("Remove from sentence 1. Remove from sentence 2?"));
-				assertArrayEquals(new Object[] {"Remove from sentence Remove from sentence 2"},
+				assertArrayEquals(new Object[] {"Remove from sentence 1 Remove from sentence 2"},
 						runtest("Remove from sentence 1. Remove from sentence 2!"));
 				assertArrayEquals(new Object[] {"Remove from sentence 1 Remove from sentence 2"},
 						runtest("Remove from sentence 1? Remove from sentence 2?"));
