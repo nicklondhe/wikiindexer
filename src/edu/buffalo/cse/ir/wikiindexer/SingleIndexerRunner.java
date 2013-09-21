@@ -69,7 +69,7 @@ public class SingleIndexerRunner {
 			
 			if (!thr.isRunning) {
 				thr.isRunning = true;
-				thr.run();
+				new Thread(thr).start();
 			}
 		}
 	}

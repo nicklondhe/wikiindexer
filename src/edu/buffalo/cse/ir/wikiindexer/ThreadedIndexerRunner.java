@@ -46,7 +46,7 @@ public class ThreadedIndexerRunner {
 			currThread.pvtQueue.add(tidx);
 			if (!currThread.isRunning) {
 				currThread.isRunning = true;
-				currThread.run();
+				new Thread(currThread).start();
 			}
 		}
 	}
