@@ -97,7 +97,14 @@ public class DateRuleTest extends TokenizerRuleTest {
 						runtest("April", "11", "is", "the", "101st", "day",
 								"of", "the", "year", "(102nd", "in", "leap",
 								"years)", "in", "the", "Gregorian", "calendar."));
-
+				assertArrayEquals(
+						new Object[] { "Apple", "is", "one", "of", "the",
+								"world's", "most", "valuable", "publicly",
+								"traded", "companies", "in",
+								"20110101Ð20120101." },
+						runtest("Apple", "is", "one", "of", "the", "world's",
+								"most", "valuable", "publicly", "traded",
+								"companies", "in", "2011Ð12."));
 			} catch (TokenizerException e) {
 
 			}

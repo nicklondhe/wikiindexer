@@ -49,5 +49,7 @@ public interface IndexerConstants {
 	public static final String DATERULE = "date.rule";
 	public static final String STOPWORDSRULE = "stwrds.rule";
 	public static final String ACCENTRULE = "accnt.rule";
+	public static final String CAPITALIZATIONRULE = "captl.rule";
+	public static final String NUMBERSRULE = "nmbrs.rule";
 	
 }

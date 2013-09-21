@@ -12,7 +12,6 @@ import java.util.Properties;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import edu.buffalo.cse.ir.wikiindexer.IndexerConstants;
 import edu.buffalo.cse.ir.wikiindexer.test.PropertiesBasedTest;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenStream;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
@@ -32,13 +31,23 @@ public class TokenizerRuleTest extends PropertiesBasedTest {
 		if (className != null) {
 			try {
 				Class cls = Class.forName(className);
-				Constructor c;
-				c = cls.getConstructor(null);
-				rule = (TokenizerRule) c.newInstance(null);
+				Constructor[] cnstrs = cls.getDeclaredConstructors();
+				Class[] ptypes;
+				for (Constructor temp : cnstrs) {
+					ptypes = temp.getParameterTypes();
+					if (ptypes.length == 0) {
+						rule = (TokenizerRule) temp.newInstance(null);
+						break;
+					} else if (ptypes.length == 1 && "java.util.Properties".equals(ptypes[0].getName())) {
+						rule = (TokenizerRule) temp.newInstance(idxProps);
+						break;
+					} else {
+						System.err.println("Unsupported constructor: Should be parameter less or use Properties");
+					}
+				}
+				
+				
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
