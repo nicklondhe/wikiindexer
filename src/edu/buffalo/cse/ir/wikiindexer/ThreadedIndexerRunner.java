@@ -27,7 +27,7 @@ public class ThreadedIndexerRunner {
 
 		rthreads = new RunnerThread[numParts];
 		for (int i = 0; i < numParts; i++) {
-			rthreads[i] = new RunnerThread();
+			rthreads[i] = new RunnerThread(i);
 		}
 	}
 
@@ -75,9 +75,10 @@ public class ThreadedIndexerRunner {
 		private boolean isComplete;
 		private boolean isRunning;
 
-		private RunnerThread() {
+		private RunnerThread(int pnum) {
 			pvtQueue = new ConcurrentLinkedQueue<ThreadedIndexerRunner.TermIndexEntry>();
 			writer = new IndexWriter(props, INDEXFIELD.TERM, INDEXFIELD.LINK);
+			writer.setPartitionNumber(pnum);
 		}
 
 		private void setComplete() {

@@ -47,6 +47,15 @@ public class IndexWriter implements Writeable {
 	}
 	
 	/**
+	 * Method to make the writer self aware of the current partition it is handling
+	 * Applicable only for distributed indexes.
+	 * @param pnum: The partition number
+	 */
+	public void setPartitionNumber(int pnum) {
+		//TODO: Optionally implement this method
+	}
+	
+	/**
 	 * Method to add a given key - value mapping to the index
 	 * @param keyId: The id for the key field, pre-converted
 	 * @param valueId: The id for the value field, pre-converted
@@ -79,7 +88,7 @@ public class IndexWriter implements Writeable {
 	 * @throws IndexerException: If any exception occurs while indexing
 	 */
 	public void addToIndex(String key, int valueId, int numOccurances) throws IndexerException {
-		
+		//TODO: Implement this method
 	}
 	
 	/**
@@ -91,7 +100,7 @@ public class IndexWriter implements Writeable {
 	 * @throws IndexerException: If any exception occurs while indexing
 	 */
 	public void addToIndex(String key, String value, int numOccurances) throws IndexerException {
-		
+		//TODO: Implement this method
 	}
 
 	/* (non-Javadoc)
