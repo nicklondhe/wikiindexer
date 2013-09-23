@@ -7,14 +7,18 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import edu.buffalo.cse.ir.wikiindexer.IndexerConstants;
 import edu.buffalo.cse.ir.wikiindexer.test.PropertiesBasedTest;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenStream;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
+import edu.buffalo.cse.ir.wikiindexer.tokenizer.rules.RuleClass;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.rules.TokenizerRule;
 
 /**
@@ -24,15 +28,31 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.rules.TokenizerRule;
 @RunWith(Parameterized.class)
 public class TokenizerRuleTest extends PropertiesBasedTest {
 	protected TokenizerRule rule;
+	protected boolean isPreTokenization;
+	
+	private static Set<String> preTknRuleSet;
 	
 	public TokenizerRuleTest(Properties props, String constantName) {
 		super(props);
+		
+		if (preTknRuleSet == null) {
+			String rules = idxProps.getProperty(IndexerConstants.PRETKNRULES);
+			if (rules != null) {
+				String [] splits = rules.split(",");
+				preTknRuleSet = new HashSet<String>(Arrays.asList(splits));
+			}
+		}
+		
 		String className = idxProps.getProperty(constantName);
 		if (className != null) {
 			try {
 				Class cls = Class.forName(className);
 				Constructor[] cnstrs = cls.getDeclaredConstructors();
 				Class[] ptypes;
+				RuleClass rclass = (RuleClass) cls.getAnnotation(RuleClass.class);
+				String rval = rclass.className().toString();
+				isPreTokenization =  (preTknRuleSet != null && preTknRuleSet.contains(rval));
+				
 				for (Constructor temp : cnstrs) {
 					ptypes = temp.getParameterTypes();
 					if (ptypes.length == 0) {

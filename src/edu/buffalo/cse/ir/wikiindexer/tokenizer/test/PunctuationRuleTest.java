@@ -13,7 +13,6 @@ import org.junit.runners.Parameterized;
 
 import edu.buffalo.cse.ir.wikiindexer.IndexerConstants;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
-import edu.buffalo.cse.ir.wikiindexer.tokenizer.rules.TokenizerRule;
 
 /**
  * @author nikhillo

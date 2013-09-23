@@ -31,23 +31,37 @@ public class CapitalizationRuleTest extends TokenizerRuleTest {
 			fail("Rule not implemented");
 		} else {
 			try {
-				assertArrayEquals(new Object[] { "this", "is", "a", "test." },
-						runtest("This", "is", "a", "test."));
-				assertArrayEquals(new Object[] { "san", "Francisco", "is",
-						"in", "California." },
-						runtest("San", "Francisco", "is", "in", "California."));
-				assertArrayEquals(
-						new Object[] { "some", "bodily", "fluids,", "such",
-								"as", "saliva", "and", "tears,", "do", "not",
-								"transmit", "HIV" },
-						runtest("Some", "bodily", "fluids,", "such", "as",
-								"saliva", "and", "tears,", "do", "not",
-								"transmit", "HIV"));
-				assertArrayEquals(
-						new Object[] { "it", "runs", "Apple's", "iOS",
-								"mobile", "operating", "system," },
-						runtest("It", "runs", "Apple's", "iOS", "mobile",
-								"operating", "system,"));
+				if (isPreTokenization) {
+					assertArrayEquals(new Object[] { "this is a test." },
+							runtest("This is a test."));
+					assertArrayEquals(new Object[] { "san Francisco is in California." },
+							runtest("San Francisco is in California."));
+					assertArrayEquals(
+							new Object[] { "some bodily fluids, such as saliva and tears, do not transmit HIV" },
+							runtest("Some bodily fluids, such as saliva and tears, do not transmit HIV"));
+					assertArrayEquals(
+							new Object[] { "it runs Apple's iOS mobile operating system," },
+							runtest("It runs Apple's iOS mobile operating system,"));
+				} else {
+					assertArrayEquals(new Object[] { "this", "is", "a", "test." },
+							runtest("This", "is", "a", "test."));
+					assertArrayEquals(new Object[] { "san", "Francisco", "is",
+							"in", "California." },
+							runtest("San", "Francisco", "is", "in", "California."));
+					assertArrayEquals(
+							new Object[] { "some", "bodily", "fluids,", "such",
+									"as", "saliva", "and", "tears,", "do", "not",
+									"transmit", "HIV" },
+							runtest("Some", "bodily", "fluids,", "such", "as",
+									"saliva", "and", "tears,", "do", "not",
+									"transmit", "HIV"));
+					assertArrayEquals(
+							new Object[] { "it", "runs", "Apple's", "iOS",
+									"mobile", "operating", "system," },
+							runtest("It", "runs", "Apple's", "iOS", "mobile",
+									"operating", "system,"));
+				}
+				
 
 			} catch (TokenizerException e) {
 

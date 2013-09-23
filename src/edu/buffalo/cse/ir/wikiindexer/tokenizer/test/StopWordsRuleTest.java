@@ -31,14 +31,26 @@ public class StopWordsRuleTest extends TokenizerRuleTest {
 			fail("Rule not implemented");
 		} else {
 			try {
-				assertArrayEquals(new Object[]{"test"}, 
-						runtest("this","is","a","test"));
-				assertArrayEquals(new Object[]{}, 
-						runtest("do","not","do","this"));
-				assertArrayEquals(new Object[]{"ace","spades"}, 
-						runtest("ace","of","spades"));
-				assertArrayEquals(new Object[]{"valid","sentence"}, 
-						runtest("valid","sentence"));
+				if (isPreTokenization) {
+					assertArrayEquals(new Object[]{"test"}, 
+							runtest("this is a test"));
+					assertArrayEquals(new Object[]{}, 
+							runtest("do not do this"));
+					assertArrayEquals(new Object[]{"ace spades"}, 
+							runtest("ace of spades"));
+					assertArrayEquals(new Object[]{"valid sentence"}, 
+							runtest("valid sentence"));
+				} else {
+					assertArrayEquals(new Object[]{"test"}, 
+							runtest("this","is","a","test"));
+					assertArrayEquals(new Object[]{}, 
+							runtest("do","not","do","this"));
+					assertArrayEquals(new Object[]{"ace","spades"}, 
+							runtest("ace","of","spades"));
+					assertArrayEquals(new Object[]{"valid","sentence"}, 
+							runtest("valid","sentence"));
+				}
+				
 			} catch (TokenizerException e) {
 				
 			}

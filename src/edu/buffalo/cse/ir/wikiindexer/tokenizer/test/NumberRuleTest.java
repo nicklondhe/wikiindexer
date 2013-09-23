@@ -31,25 +31,38 @@ public class NumberRuleTest extends TokenizerRuleTest {
 			fail("Rule not implemented");
 		} else {
 			try {
-				assertArrayEquals(
-						new Object[] { "The", "App", "Store", "offered",
-								"more", "than", "apps", "by", "Apple", "and",
-								"third", "parties." },
-						runtest("The", "App", "Store", "offered", "more",
-								"than", "775,000", "apps", "by", "Apple",
-								"and", "third", "parties."));
-				assertArrayEquals(
-						new Object[] { "The", "game", "received", "average",
-								"review", "scores", "of", "%", "and", "/",
-								"for", "the", "Xbox", "version" },
-						runtest("The", "game", "received", "average", "review",
-								"scores", "of", "96.92%", "and", "98/100",
-								"for", "the", "Xbox", "360", "version"));
-				assertArrayEquals(
-						new Object[] { "The", "number", "is", "the", "sixth",
-								"prime", "number" },
-						runtest("The", "number", "13", "is", "the", "sixth",
-								"prime", "number"));
+				if (isPreTokenization) {
+					assertArrayEquals(
+							new Object[] { "The App Store offered more than apps by Apple and third parties." },
+							runtest("The App Store offered more than 775,000 apps by Apple and third parties."));
+					assertArrayEquals(
+							new Object[] { "The game received average review scores of % and / for the Xbox version" },
+							runtest("The game received average review scores of 96.92% and 98/100 for the Xbox 360 version"));
+					assertArrayEquals(
+							new Object[] { "The number is the sixth prime number" },
+							runtest("The number 13 is the sixth prime number"));
+				} else {
+					assertArrayEquals(
+							new Object[] { "The", "App", "Store", "offered",
+									"more", "than", "apps", "by", "Apple",
+									"and", "third", "parties." },
+							runtest("The", "App", "Store", "offered", "more",
+									"than", "775,000", "apps", "by", "Apple",
+									"and", "third", "parties."));
+					assertArrayEquals(
+							new Object[] { "The", "game", "received",
+									"average", "review", "scores", "of", "%",
+									"and", "/", "for", "the", "Xbox", "version" },
+							runtest("The", "game", "received", "average",
+									"review", "scores", "of", "96.92%", "and",
+									"98/100", "for", "the", "Xbox", "360",
+									"version"));
+					assertArrayEquals(
+							new Object[] { "The", "number", "is", "the",
+									"sixth", "prime", "number" },
+							runtest("The", "number", "13", "is", "the",
+									"sixth", "prime", "number"));
+				}
 
 			} catch (TokenizerException e) {
 

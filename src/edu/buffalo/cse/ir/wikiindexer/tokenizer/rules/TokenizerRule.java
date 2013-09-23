@@ -26,17 +26,17 @@ public interface TokenizerRule {
 	 *
 	 */
 	public enum RULENAMES {
-		PUNCTUATION, //for punctuation marks that could mark end of sentence {. ? ! }
-		APOSTROPHE, //for apostrophes only
-		HYPHEN, //for hyphens only
-		SPECIALCHARS, //for anything non alphanumeric not covered by above
-		DATES, //for dates
-		NUMBERS, //for numbers
-		CAPITALIZATION, //for capitalization
-		ACCENTS, //acccents and diacritics
-		WHITESPACE, //split by whitespace
-		DELIM, //split by any delim *will not be tested*
-		STEMMER, //stemmer
-		STOPWORDS //stop words
+		PUNCTUATION { public String toString() {return "PUNCTUATION";}}, //for punctuation marks that could mark end of sentence {. ? ! }
+		APOSTROPHE { public String toString() {return "APOSTROPHE";}}, //for apostrophes only
+		HYPHEN { public String toString() {return "HYPHEN";}}, //for hyphens only
+		SPECIALCHARS { public String toString() {return "SPECIALCHARS";}}, //for anything non alphanumeric not covered by above
+		DATES { public String toString() {return "DATES";}}, //for dates
+		NUMBERS { public String toString() {return "NUMBERS";}}, //for numbers
+		CAPITALIZATION { public String toString() {return "CAPITALIZATION";}}, //for capitalization
+		ACCENTS { public String toString() {return "ACCENTS";}}, //acccents and diacritics
+		WHITESPACE { public String toString() {return "WHITESPACE";}}, //split by whitespace
+		DELIM { public String toString() {return "DELIM";}}, //split by any delim *will not be tested*
+		STEMMER { public String toString() {return "STEMMER";}}, //stemmer
+		STOPWORDS { public String toString() {return "STOPWORDS";}} //stop words
 	};
 }
