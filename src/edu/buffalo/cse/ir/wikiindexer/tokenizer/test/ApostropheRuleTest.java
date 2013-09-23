@@ -48,7 +48,7 @@ public class ApostropheRuleTest extends TokenizerRuleTest {
 				assertArrayEquals(new Object[]{"Should","have"}, runtest("Should've"));
 				assertArrayEquals(new Object[]{"They","would"}, runtest("They'd"));
 				assertArrayEquals(new Object[]{"She","will"}, runtest("She'll"));
-				assertArrayEquals(new Object[]{"Put","em"}, runtest("Put","'em"));
+				assertArrayEquals(new Object[]{"Put","them"}, runtest("Put","'em"));
 				
 				//as single quotes
 				assertArrayEquals(new Object[]{"quote","test"}, runtest("'quote","test'"));

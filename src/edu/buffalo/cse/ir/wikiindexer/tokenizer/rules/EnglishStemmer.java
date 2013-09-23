@@ -36,6 +36,7 @@ public class EnglishStemmer implements TokenizerRule {
 						}
 						
 						s.stem();
+						stream.previous();
 						stream.set(s.toString());
 					}
 				}

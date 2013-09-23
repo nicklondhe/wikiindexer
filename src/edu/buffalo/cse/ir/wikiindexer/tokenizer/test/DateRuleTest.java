@@ -65,7 +65,7 @@ public class DateRuleTest extends TokenizerRuleTest {
 								"to", "the", "BAA", "and", "won", "that",
 								"league's", "1948", "title."));
 				assertArrayEquals(new Object[] { "It", "was", "now", "about",
-						"10:15:00" },
+						"10:15:00." },
 						runtest("It", "was", "now", "about", "10:15", "am."));
 				assertArrayEquals(
 						new Object[] { "Godse", "approached", "Gandhi", "on",
