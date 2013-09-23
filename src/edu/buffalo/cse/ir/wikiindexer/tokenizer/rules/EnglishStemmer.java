@@ -26,7 +26,7 @@ public class EnglishStemmer implements TokenizerRule {
 			String token;
 			Stemmer s;
 			while (stream.hasNext()) { 
-				token = stream.next();
+				token = stream.next(); //read next token
 				if (token != null) {
 					token = token.toLowerCase();
 					if (isLettersOnly(token)) {
@@ -36,8 +36,9 @@ public class EnglishStemmer implements TokenizerRule {
 						}
 						
 						s.stem();
-						stream.previous();
-						stream.set(s.toString());
+						stream.previous(); //move token back as we need to change last read token
+						stream.set(s.toString()); //change value, no iterator move
+						stream.next(); // move iter to next posiiton, beyond the token we just changed
 					}
 				}
 				

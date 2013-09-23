@@ -41,7 +41,7 @@ public class DateRuleTest extends TokenizerRuleTest {
 								"1978", "is", "an", "Indian", "actress."));
 				assertArrayEquals(
 						new Object[] { "President", "Franklin", "D.",
-								"Roosevelt", "to", "proclaim", "19411207,",
+								"Roosevelt", "to", "proclaim", "19411207",
 								"'a", "date", "which", "will", "live", "in",
 								"infamy'" },
 						runtest("President", "Franklin", "D.", "Roosevelt",

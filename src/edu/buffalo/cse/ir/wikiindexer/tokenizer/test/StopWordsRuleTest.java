@@ -33,7 +33,7 @@ public class StopWordsRuleTest extends TokenizerRuleTest {
 			try {
 				assertArrayEquals(new Object[]{"test"}, 
 						runtest("this","is","a","test"));
-				assertArrayEquals(new Object[]{""}, 
+				assertArrayEquals(new Object[]{}, 
 						runtest("do","not","do","this"));
 				assertArrayEquals(new Object[]{"ace","spades"}, 
 						runtest("ace","of","spades"));
