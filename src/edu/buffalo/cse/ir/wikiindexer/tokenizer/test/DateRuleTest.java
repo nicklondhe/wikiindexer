@@ -39,7 +39,7 @@ public class DateRuleTest extends TokenizerRuleTest {
 							new Object[] { "Vidya Balan born 19780101 is an Indian actress." },
 							runtest("Vidya Balan born 1 January 1978 is an Indian actress."));
 					assertArrayEquals(
-							new Object[] { "President Franklin D. Roosevelt to proclaim 19411207 'a date which will live in infamy'" },
+							new Object[] { "President Franklin D. Roosevelt to proclaim 19411207, 'a date which will live in infamy'" },
 							runtest("President Franklin D. Roosevelt to proclaim December 7, 1941, 'a date which will live in infamy'"));
 					assertArrayEquals(
 							new Object[] { "The Academy operated until it was destroyed by Lucius Cornelius Sulla in -00840101" },
@@ -74,7 +74,7 @@ public class DateRuleTest extends TokenizerRuleTest {
 									"1978", "is", "an", "Indian", "actress."));
 					assertArrayEquals(
 							new Object[] { "President", "Franklin", "D.",
-									"Roosevelt", "to", "proclaim", "19411207",
+									"Roosevelt", "to", "proclaim", "19411207,",
 									"'a", "date", "which", "will", "live",
 									"in", "infamy'" },
 							runtest("President", "Franklin", "D.", "Roosevelt",
