@@ -6,6 +6,7 @@ package edu.buffalo.cse.ir.wikiindexer;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -26,6 +27,7 @@ import edu.buffalo.cse.ir.wikiindexer.indexer.IndexerException;
 import edu.buffalo.cse.ir.wikiindexer.indexer.SharedDictionary;
 import edu.buffalo.cse.ir.wikiindexer.parsers.Parser;
 import edu.buffalo.cse.ir.wikiindexer.test.AllTests;
+import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenStream;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.Tokenizer;
 import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerFactory;
 import edu.buffalo.cse.ir.wikiindexer.wikipedia.DocumentTransformer;
@@ -103,14 +105,18 @@ public class Runner {
 	 * @param properties: The properties file to run with
 	 */
 	private static void runIndexer(Properties properties) {
-		Parser parser = new Parser(properties);
 		ConcurrentLinkedQueue<WikipediaDocument> queue = new ConcurrentLinkedQueue<WikipediaDocument>();
-		parser.parse(FileUtil.getDumpFileName(properties), queue);
+		ParserRunner prunner = new ParserRunner(properties, queue);
+		new Thread(prunner).start();
 		
 		synchronized (queue) {
-			while (queue.size() < 10) {
-				//do nothing till we have at least 10 elements
-				//we assume that a lead of 10 will be sufficient
+			while (queue.isEmpty()) {
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -149,31 +155,41 @@ public class Runner {
 		for (int i = 0; i < numDocs; i++) {
 			try {
 				idoc = pool.take().get();
-				currDocId = docDict.lookup(idoc.getDocumentIdentifier());
 				
-				try {
-					for (INDEXFIELD fld : INDEXFIELD.values()) {
-						tokenmap = idoc.getStream(fld).getTokenMap();
-						switch (fld) {
-						case TERM:
-							termRunner.addToIndex(tokenmap, currDocId);
-							break;
-						case AUTHOR:
-							authIdxer.processTokenMap(currDocId, tokenmap);
-							break;
-						case CATEGORY:
-							catIdxer.processTokenMap(currDocId, tokenmap);
-							break;
-						case LINK:
-							linkIdxer.processTokenMap(currDocId, tokenmap);
-							break;
+				if (idoc != null) {
+					currDocId = docDict.lookup(idoc.getDocumentIdentifier());
+					TokenStream stream;
+					try {
+						for (INDEXFIELD fld : INDEXFIELD.values()) {
+							stream = idoc.getStream(fld);
+							
+							if (stream != null) {
+								tokenmap = stream.getTokenMap();
+								
+								if (tokenmap != null) {
+									switch (fld) {
+									case TERM:
+										termRunner.addToIndex(tokenmap, currDocId);
+										break;
+									case AUTHOR:
+										authIdxer.processTokenMap(currDocId, tokenmap);
+										break;
+									case CATEGORY:
+										catIdxer.processTokenMap(currDocId, tokenmap);
+										break;
+									case LINK:
+										linkIdxer.processTokenMap(currDocId, tokenmap);
+										break;
+									}
+								}
+							}
+							
 						}
+					} catch (IndexerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (IndexerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -276,6 +292,25 @@ public class Runner {
 		}
 		
 		return false;
+	}
+	
+	private static class ParserRunner implements Runnable {
+		private Properties idxProps;
+		private Collection<WikipediaDocument> coll;
+		private Parser parser;
+
+		
+		private ParserRunner(Properties props, Collection<WikipediaDocument> collection) {
+			this.idxProps = props;
+			this.coll = collection;
+			 parser = new Parser(props);
+		}
+		
+		public void run() {
+			parser.parse(FileUtil.getDumpFileName(idxProps), coll);
+			
+		}
+		
 	}
 
 }

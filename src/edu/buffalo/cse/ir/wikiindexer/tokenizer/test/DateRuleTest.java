@@ -23,7 +23,7 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
 @RunWith(Parameterized.class)
 public class DateRuleTest extends TokenizerRuleTest {
 
-	public DateRuleTest(Properties props, String constantName) {
+	public DateRuleTest(Properties props) {
 		super(props, IndexerConstants.DATERULE);
 	}
 

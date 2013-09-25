@@ -21,7 +21,7 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
 @RunWith(Parameterized.class)
 public class PunctuationRuleTest extends TokenizerRuleTest {
 	
-	public PunctuationRuleTest(Properties props, String constantName) {
+	public PunctuationRuleTest(Properties props) {
 		super(props, IndexerConstants.PUNCTUATIONRULE);
 	}
 	

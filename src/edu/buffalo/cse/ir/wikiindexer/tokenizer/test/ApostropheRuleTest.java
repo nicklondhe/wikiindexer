@@ -21,7 +21,7 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
 @RunWith(Parameterized.class)
 public class ApostropheRuleTest extends TokenizerRuleTest {
 
-	public ApostropheRuleTest(Properties props, String constantName) {
+	public ApostropheRuleTest(Properties props) {
 		super(props, IndexerConstants.APOSTROPHERULE);
 	}
 	

@@ -98,6 +98,6 @@ public class TokenizerRuleTest extends PropertiesBasedTest {
 		
 		rule.apply(stream);
 		Collection<String> strtokens = stream.getAllTokens();
-		return (strtokens != null) ? strtokens.toArray() : null;
+		return (strtokens != null) ? strtokens.toArray() : new Object[]{};
 	}
 }

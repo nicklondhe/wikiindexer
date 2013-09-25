@@ -54,22 +54,25 @@ public class SingleIndexerRunner {
 		for (Entry<String, Integer> etr : map.entrySet()) {
 			key = etr.getKey();
 			value = etr.getValue();
-			arrObj = new Object[3];
 			
-			if (lookupBoth) {
-				arrObj[0] = docid;
-				arrObj[1] = docDict.lookup(key);
-			} else {
-				arrObj[0] = key;
-				arrObj[1] = docid;
-			}
-			
-			arrObj[2] = value;
-			pvtQueue.add(arrObj);
-			
-			if (!thr.isRunning) {
-				thr.isRunning = true;
-				new Thread(thr).start();
+			if (key != null) {
+				arrObj = new Object[3];
+				
+				if (lookupBoth) {
+					arrObj[0] = docid;
+					arrObj[1] = docDict.lookup(key);
+				} else {
+					arrObj[0] = key;
+					arrObj[1] = docid;
+				}
+				
+				arrObj[2] = value;
+				pvtQueue.add(arrObj);
+				
+				if (!thr.isRunning) {
+					thr.isRunning = true;
+					new Thread(thr).start();
+				}
 			}
 		}
 	}

@@ -21,7 +21,7 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
 @RunWith(Parameterized.class)
 public class AccentRuleTest extends TokenizerRuleTest {
 
-	public AccentRuleTest(Properties props, String constantName) {
+	public AccentRuleTest(Properties props) {
 		super(props, IndexerConstants.ACCENTRULE);
 	}
 	
@@ -35,7 +35,7 @@ public class AccentRuleTest extends TokenizerRuleTest {
 					assertArrayEquals(new Object[]{"The urban counterpart of chateau is palais"},
 							runtest("The urban counterpart of château is palais"));
 					assertArrayEquals(new Object[]{"The expression hotel particulier is used for an urban 'private house'"}, 
-							runtest("The expression hôtel", "particulier is used for an urban 'private house'"));
+							runtest("The expression hôtel particulier is used for an urban 'private house'"));
 					assertArrayEquals(new Object[]{"Resumes can be used for a variety of reasons"}, 
 							runtest("Résumés can be used for a variety of reasons"));
 					assertArrayEquals(new Object[]{"пaра", "('steam/vapour') and napa ('cent/penny, money')"},

@@ -21,7 +21,7 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
 @RunWith(Parameterized.class)
 public class StopWordsRuleTest extends TokenizerRuleTest {
 
-	public StopWordsRuleTest(Properties props, String constantName) {
+	public StopWordsRuleTest(Properties props) {
 		super(props, IndexerConstants.STOPWORDSRULE);
 	}
 	
