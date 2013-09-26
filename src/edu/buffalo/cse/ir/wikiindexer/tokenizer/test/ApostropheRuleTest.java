@@ -58,7 +58,7 @@ public class ApostropheRuleTest extends TokenizerRuleTest {
 				} else {
 					//basic rules
 					assertArrayEquals(new Object[]{"Finland"}, runtest("Finland's"));
-					assertArrayEquals(new Object[]{"Gladys house"}, runtest("Gladys' house"));
+					assertArrayEquals(new Object[]{"Gladys", "house"}, runtest("Gladys'", "house"));
 		
 					//contractions
 					assertArrayEquals(new Object[]{"is","not"}, runtest("isn't"));

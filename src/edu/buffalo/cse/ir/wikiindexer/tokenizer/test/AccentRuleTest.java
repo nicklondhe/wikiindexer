@@ -38,8 +38,8 @@ public class AccentRuleTest extends TokenizerRuleTest {
 							runtest("The expression hôtel particulier is used for an urban 'private house'"));
 					assertArrayEquals(new Object[]{"Resumes can be used for a variety of reasons"}, 
 							runtest("Résumés can be used for a variety of reasons"));
-					assertArrayEquals(new Object[]{"пaра", "('steam/vapour') and napa ('cent/penny, money')"},
-							runtest("па̀ра ('steam/vapour') and пара̀ ('cent/penny, money')"));
+					assertArrayEquals(new Object[]{"naра", "('steam/vapour') and napa ('cent/penny, money')"},
+							runtest("nа̀ра ('steam/vapour') and nара̀ ('cent/penny, money')"));
 					assertArrayEquals(new Object[]{"for example vis-a-vis piece de resistance and creme brulee"}, 
 							runtest("for example vis-à-vis pièce de résistance and crème brûlée"));
 					assertArrayEquals(new Object[]{"Spanish pinguino French aigue or aigue"}, 
@@ -51,8 +51,8 @@ public class AccentRuleTest extends TokenizerRuleTest {
 							runtest("The", "expression", "hôtel", "particulier", "is", "used", "for", "an", "urban", "'private", "house'"));
 					assertArrayEquals(new Object[]{"Resumes", "can", "be", "used", "for", "a", "variety", "of", "reasons"}, 
 							runtest("Résumés", "can", "be", "used", "for", "a", "variety", "of", "reasons"));
-					assertArrayEquals(new Object[]{"пaра", "('steam/vapour')", "and", "napa", "('cent/penny,", "money')"},
-							runtest("па̀ра", "('steam/vapour')", "and", "пара̀", "('cent/penny,", "money')"));
+					assertArrayEquals(new Object[]{"naра", "('steam/vapour')", "and", "napa", "('cent/penny,", "money')"},
+							runtest("nа̀ра", "('steam/vapour')", "and", "nара̀", "('cent/penny,", "money')"));
 					assertArrayEquals(new Object[]{"for", "example", "vis-a-vis", "piece", "de", "resistance", "and", "creme", "brulee"}, 
 							runtest("for", "example", "vis-à-vis", "pièce", "de", "résistance", "and", "crème", "brûlée"));
 					assertArrayEquals(new Object[]{"Spanish", "pinguino", "French", "aigue", "or", "aigue"}, 
