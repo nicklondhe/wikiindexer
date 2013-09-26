@@ -21,7 +21,7 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
 @RunWith(Parameterized.class)
 public class SpecialCharRuleTest extends TokenizerRuleTest {
 
-	public SpecialCharRuleTest(Properties props, String constantName) {
+	public SpecialCharRuleTest(Properties props) {
 		super(props, IndexerConstants.SPECIALCHARRULE);
 	}
 	

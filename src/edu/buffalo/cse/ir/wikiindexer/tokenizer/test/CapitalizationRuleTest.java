@@ -21,7 +21,7 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
 @RunWith(Parameterized.class)
 public class CapitalizationRuleTest extends TokenizerRuleTest {
 
-	public CapitalizationRuleTest(Properties props, String constantName) {
+	public CapitalizationRuleTest(Properties props) {
 		super(props, IndexerConstants.CAPITALIZATIONRULE);
 	}
 

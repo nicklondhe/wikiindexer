@@ -21,7 +21,7 @@ import edu.buffalo.cse.ir.wikiindexer.tokenizer.TokenizerException;
 @RunWith(Parameterized.class)
 public class NumberRuleTest extends TokenizerRuleTest {
 
-	public NumberRuleTest(Properties props, String constantName) {
+	public NumberRuleTest(Properties props) {
 		super(props, IndexerConstants.NUMBERSRULE);
 	}
 
