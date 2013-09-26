@@ -28,7 +28,7 @@ public class EnglishStemmer implements TokenizerRule {
 			while (stream.hasNext()) { 
 				token = stream.next(); //read next token
 				if (token != null) {
-					token = token.toLowerCase();
+					//token = token.toLowerCase();
 					if (isLettersOnly(token)) {
 						s = new Stemmer();
 						for (char c: token.toCharArray()) {
