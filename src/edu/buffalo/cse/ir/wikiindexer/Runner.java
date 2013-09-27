@@ -6,6 +6,7 @@ package edu.buffalo.cse.ir.wikiindexer;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,22 +110,22 @@ public class Runner {
 		ParserRunner prunner = new ParserRunner(properties, queue);
 		new Thread(prunner).start();
 		
-		synchronized (queue) {
-			while (queue.isEmpty()) {
-				try {
+		try {
+			synchronized (queue) {
+				while (queue.isEmpty()) {
 					Thread.sleep(1500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
+			
+			tokenizeAndIndex(properties, queue);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		tokenizeAndIndex(properties, queue);
 	}
 
 	private static void tokenizeAndIndex(Properties properties,
-			ConcurrentLinkedQueue<WikipediaDocument> queue) {
+			ConcurrentLinkedQueue<WikipediaDocument> queue) throws InterruptedException {
 		/*
 		 * Pseudo-code:
 		 * 		1. Create a thread executor
@@ -137,10 +138,20 @@ public class Runner {
 		WikipediaDocument doc;
 		Map<INDEXFIELD, Tokenizer> tknizerMap;
 		int numDocs = 0;
-		while ((doc = queue.poll()) != null) {
-			tknizerMap = initMap(properties);
-			pool.submit(new DocumentTransformer(tknizerMap, doc));
-			numDocs++;
+		while (true) {
+			doc = queue.poll();
+			
+			if (doc == null) {
+				Thread.sleep(1500);
+			} else {
+				if ("DUMMY".equals(doc.getTitle()) && "DUMMY".equals(doc.getAuthor())) {
+					break; //all done
+				} else {
+					tknizerMap = initMap(properties);
+					pool.submit(new DocumentTransformer(tknizerMap, doc));
+					numDocs++;
+				}
+			}
 		}
 		
 		IndexableDocument idoc;
@@ -305,17 +316,24 @@ public class Runner {
 		private Properties idxProps;
 		private Collection<WikipediaDocument> coll;
 		private Parser parser;
-
+		
+		private static WikipediaDocument recEnd;
 		
 		private ParserRunner(Properties props, Collection<WikipediaDocument> collection) {
 			this.idxProps = props;
 			this.coll = collection;
 			 parser = new Parser(props);
+			 try {
+				recEnd =  new WikipediaDocument(-9999, "2199-12-31T00:00:00Z", "DUMMY", "DUMMY");
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		public void run() {
 			parser.parse(FileUtil.getDumpFileName(idxProps), coll);
-			
+			((ConcurrentLinkedQueue<WikipediaDocument>) coll).offer(recEnd); //end of record
 		}
 		
 	}
