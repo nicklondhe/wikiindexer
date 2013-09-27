@@ -135,6 +135,11 @@ public class Runner {
 		CompletionService<IndexableDocument> pool = new ExecutorCompletionService<IndexableDocument>(threadPool);
 		new Thread(new TokenizerRunner(queue, pool, properties)).start();
 		
+		synchronized (numDocs) {
+			while (numDocs < 5) {
+				Thread.sleep(1500);
+			}
+		}
 		
 		IndexableDocument idoc;
 		SharedDictionary docDict = new SharedDictionary(properties, INDEXFIELD.LINK);
