@@ -64,6 +64,16 @@ public class ThreadedIndexerRunner {
 			thr.setComplete();
 		}
 	}
+	
+	protected boolean isFinished() {
+		boolean flag = true;
+		
+		for (RunnerThread thr : rthreads) {
+			flag &= (thr.isComplete && thr.isQueueEmpty());
+		}
+		
+		return flag;
+	}
 
 	private class TermIndexEntry {
 		private String term;
@@ -91,6 +101,12 @@ public class ThreadedIndexerRunner {
 
 		private void setComplete() {
 			isComplete = true;
+		}
+		
+		private boolean isQueueEmpty() {
+			synchronized (pvtQueue) {
+				return pvtQueue.isEmpty();
+			}
 		}
 
 		public void run() {

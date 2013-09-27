@@ -77,6 +77,10 @@ public class SingleIndexerRunner {
 		}
 	}
 	
+	protected boolean isFinished() {
+		return thr.isComplete && thr.isQueueEmpty();
+	}
+	
 	/**
 	 * 
 	 * @throws IndexerException
@@ -106,6 +110,12 @@ public class SingleIndexerRunner {
 		 */
 		private void setComplete() {
 			isComplete = true;
+		}
+		
+		private boolean isQueueEmpty() {
+			synchronized (pvtQueue) {
+				return pvtQueue.isEmpty();
+			}
 		}
 		
 		/**

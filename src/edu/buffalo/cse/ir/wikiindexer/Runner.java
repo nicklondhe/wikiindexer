@@ -199,14 +199,21 @@ public class Runner {
 			} 
 		}
 		
+		
 		try {
 			termRunner.cleanup();
 			authIdxer.cleanup();
 			catIdxer.cleanup();
 			linkIdxer.cleanup();
+			docDict.writeToDisk();
+			docDict.cleanUp();
 		} catch (IndexerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		while (termRunner.isFinished() && authIdxer.isFinished() && catIdxer.isFinished() && linkIdxer.isFinished()) {
+			//do nothing
 		}
 		
 		threadPool.shutdown();
