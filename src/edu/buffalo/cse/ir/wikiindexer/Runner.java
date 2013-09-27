@@ -40,7 +40,7 @@ import edu.buffalo.cse.ir.wikiindexer.wikipedia.WikipediaDocument;
  * the provided documentation on how to invoke this class.
  */
 public class Runner {
-	private static Integer numDocs;
+	private static Integer numDocs = 0;
 	/**
 	 * @param args
 	 */
@@ -209,6 +209,8 @@ public class Runner {
 						e.printStackTrace();
 					}
 				}
+				
+				prevCount = currCount;
 			}
 			
 		}
